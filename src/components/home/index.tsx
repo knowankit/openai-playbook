@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { Paper, Button } from "@mui/material";
+import Image from "next/image";
 import { useRouter } from "next/router";
 
 const demos = [
@@ -27,14 +28,19 @@ const Home = () => {
         px="1rem"
         height="40vh"
         display="flex"
-        color="white"
+        color="black"
         justifyContent="center"
         alignItems="center"
-        bgcolor="black"
       >
-        Search here
+        <Image
+          src="/assets/image/open-ai-2.png"
+          height={80}
+          width={80}
+          alt="Open ai icon"
+        />
+        &nbsp; playbook
       </Box>
-      <Box display="flex" p={4}>
+      <Box display="flex" p={4} bgcolor="black" height="60vh">
         {demos.map((demo, index) => (
           <Button
             sx={{ textTransform: "none" }}

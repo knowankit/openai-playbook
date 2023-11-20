@@ -28,7 +28,7 @@ const getImage = async (text: string) => {
   const image = await openai.images.generate({ model: "dall-e-2", prompt: text, size: '256x256' });
 
   // console.log("image", image);
-  console.log("image data", image.data);
+  // console.log("image data", image.data);
 
   return image.data
 
