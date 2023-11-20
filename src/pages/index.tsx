@@ -2,11 +2,11 @@ import { Box } from "@mui/material";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 
-const EmailEditor = dynamic(() => import("@/components"), {
-  ssr: false,
+const Home = dynamic(() => import("@/components/home"), {
+  ssr: false
 });
 
-const EmailEditorPage = () => {
+const HomePage = () => {
   return (
     <Box
       sx={{
@@ -17,9 +17,9 @@ const EmailEditorPage = () => {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
       </Head>
-      <EmailEditor />
+      <Home />
     </Box>
   );
 };
 
-export default EmailEditorPage;
+export default HomePage;
