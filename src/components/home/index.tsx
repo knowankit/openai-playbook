@@ -44,6 +44,7 @@ const Home = () => {
         {demos.map((demo, index) => (
           <Button
             sx={{ textTransform: "none" }}
+            key={index}
             onClick={event => handleClick(event, demo.link)}
           >
             <Paper elevation={3} sx={{ padding: "4rem" }} key={index}>
