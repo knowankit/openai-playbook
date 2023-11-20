@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { TextField, Button, Box, Typography } from "@mui/material";
-import Image from "next/image";
+import ImageSkeleton from "@/components/image-generation/image-skeleton";
 
 const ImageGeneration = () => {
   const [searchText, setSearchText] = useState("");
+  const [isLoading, setLoading] = useState(false);
+
   const [imageData, setImageData] = useState<any>({});
 
   const handleSearch = async () => {
     // Add your logic here for generating images based on the search text
-    console.log(`Generating images for: ${searchText}`);
+    setLoading(true);
 
     const response = await fetch("http://localhost:3000/api/generate-image", {
       method: "POST",
@@ -23,6 +25,8 @@ const ImageGeneration = () => {
     if (Array.isArray(result)) {
       setImageData(result[0]);
     }
+
+    setLoading(false);
   };
 
   return (
@@ -53,6 +57,12 @@ const ImageGeneration = () => {
           Generate Image
         </Button>
       </Box>
+
+      {isLoading && (
+        <Box mt={4}>
+          <ImageSkeleton />
+        </Box>
+      )}
 
       {imageData.url && (
         <>
