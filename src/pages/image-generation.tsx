@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { TextField, Button, Box, Typography } from "@mui/material";
 import ImageSkeleton from "@/components/image-generation/image-skeleton";
+import ImageIcon from "@mui/icons-material/Image";
 
 const ImageGeneration = () => {
   const [searchText, setSearchText] = useState("");
@@ -11,6 +12,7 @@ const ImageGeneration = () => {
   const handleSearch = async () => {
     // Add your logic here for generating images based on the search text
     setLoading(true);
+    setImageData({});
 
     const response = await fetch("http://localhost:3000/api/generate-image", {
       method: "POST",
@@ -29,16 +31,56 @@ const ImageGeneration = () => {
     setLoading(false);
   };
 
+  const getImageOrPlaceHolder = () => {
+    if (isLoading) {
+      return (
+        <Box
+          pt={4}
+          height="inherit"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <ImageSkeleton />
+        </Box>
+      );
+    }
+
+    if (imageData.url) {
+      return (
+        <>
+          <Box pt={4} display="flex" justifyContent="center">
+            <Box
+              component="img"
+              src={imageData.url}
+              width={500}
+              height={500}
+              alt="generated image"
+            />
+          </Box>
+          <Box width="36rem">
+            <Typography>{imageData.revised_prompt}</Typography>
+          </Box>
+        </>
+      );
+    }
+
+    return (
+      <Box display="flex" justifyContent="center">
+        <ImageIcon sx={{ fontSize: "32rem" }} />
+      </Box>
+    );
+  };
+
   return (
-    <Box
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      flexDirection="column"
-      height="100vh"
-      width="100vw"
-    >
-      <Box>
+    <>
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        height="30vh"
+        width="100vw"
+      >
         <TextField
           label="Search"
           autoComplete="off"
@@ -57,30 +99,10 @@ const ImageGeneration = () => {
           Generate Image
         </Button>
       </Box>
-
-      {isLoading && (
-        <Box mt={4}>
-          <ImageSkeleton />
-        </Box>
-      )}
-
-      {imageData.url && (
-        <>
-          <Box mt={4}>
-            <Box
-              component="img"
-              src={imageData.url}
-              width={500}
-              height={500}
-              alt="Picture of the author"
-            />
-          </Box>
-          <Box width="36rem">
-            <Typography>{imageData.revised_prompt}</Typography>
-          </Box>
-        </>
-      )}
-    </Box>
+      <Box height="70vh" color="white" bgcolor="black">
+        {getImageOrPlaceHolder()}
+      </Box>
+    </>
   );
 };
 

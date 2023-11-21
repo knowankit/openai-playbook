@@ -1,7 +1,7 @@
-import Skeleton from "@mui/material/Skeleton";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const ImageSkeleton = () => {
-  return <Skeleton variant="rectangular" width={500} height={400} />;
+  return <CircularProgress sx={{ color: "white" }} />;
 };
 
 export default ImageSkeleton;
