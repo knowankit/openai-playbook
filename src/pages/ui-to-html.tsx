@@ -1,8 +1,10 @@
 import React, { useState, ChangeEvent } from "react";
-import { Button, Box } from "@mui/material";
+import { Button, Box, Typography } from "@mui/material";
 import ImageSkeleton from "@/components/image-generation/image-skeleton";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
+import "@tldraw/tldraw/tldraw.css";
+import { Tldraw } from "@tldraw/tldraw";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -19,6 +21,7 @@ const VisuallyHiddenInput = styled("input")({
 const ImageGeneration = () => {
   const [base64Image, setBase64Image] = useState("");
   const [isLoading, setLoading] = useState(false);
+  const [view, setView] = useState<"draw" | "upload" | "">("");
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -53,15 +56,8 @@ const ImageGeneration = () => {
     console.log("response", result);
   };
 
-  return (
-    <Box
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      flexDirection="column"
-      height="100vh"
-      width="100vw"
-    >
+  const WithImageControls = () => (
+    <>
       <Button
         component="label"
         variant="contained"
@@ -103,8 +99,76 @@ const ImageGeneration = () => {
           />
         </Box>
       )}
-    </Box>
+    </>
   );
+
+  const defaultButtonStyle = {
+    textTransform: "none",
+    height: "200px",
+    width: "200px",
+    fontSize: "1rem"
+  };
+
+  if (!view) {
+    return (
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        flexDirection="column"
+        height="100vh"
+        width="100vw"
+      >
+        <Typography variant="h3">AI Vision</Typography>
+        <Box display="flex" alignItems="center" justifyContent="center" mt={4}>
+          <Button
+            variant="contained"
+            sx={defaultButtonStyle}
+            onClick={() => setView("upload")}
+          >
+            Do you have the Image?
+          </Button>
+          <Button
+            variant="contained"
+            sx={{ ...defaultButtonStyle, ml: 2 }}
+            onClick={() => setView("draw")}
+          >
+            Draw and download the Image
+          </Button>
+        </Box>
+      </Box>
+    );
+  }
+
+  if (view === "draw") {
+    return (
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        flexDirection="column"
+        height="100vh"
+        width="100vw"
+      >
+        <Tldraw />
+      </Box>
+    );
+  }
+
+  if (view === "upload") {
+    return (
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        flexDirection="column"
+        height="100vh"
+        width="100vw"
+      >
+        <WithImageControls />
+      </Box>
+    );
+  }
 };
 
 export default ImageGeneration;

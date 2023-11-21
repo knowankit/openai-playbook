@@ -28,7 +28,7 @@ const systemPrompt = `You are an proficient Material UI developer. A user will p
 if you need to insert an image, use placehold.co to create a placeholder image. Respond only with the html file.`;
 
 
-const getImage = async (base64Image) => {
+const getImage = async (base64Image: any) => {
   const response = await openai.chat.completions.create({
     model: "gpt-4-vision-preview",
     max_tokens: 4096,
