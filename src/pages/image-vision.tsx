@@ -5,6 +5,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
 import "@tldraw/tldraw/tldraw.css";
 import { Tldraw } from "@tldraw/tldraw";
+import Image from "next/image";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -109,66 +110,72 @@ const ImageGeneration = () => {
     fontSize: "1rem"
   };
 
-  if (!view) {
-    return (
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        flexDirection="column"
-        height="100vh"
-        width="100vw"
-      >
-        <Typography variant="h3">AI Vision</Typography>
-        <Box display="flex" alignItems="center" justifyContent="center" mt={4}>
-          <Button
-            variant="contained"
-            sx={defaultButtonStyle}
-            onClick={() => setView("upload")}
-          >
-            Do you have the Image?
-          </Button>
-          <Button
-            variant="contained"
-            sx={{ ...defaultButtonStyle, ml: 2 }}
-            onClick={() => setView("draw")}
-          >
-            Draw and download the Image
-          </Button>
-        </Box>
-      </Box>
-    );
-  }
+  const loadUI = () => {
+    if (!view) {
+      return (
+        <>
+          <Box height="30vh">
+            <Box display="flex" justifyContent="center" alignItems="center">
+              <Image
+                src="/assets/image/open-ai-2.png"
+                height={150}
+                width={150}
+                alt="Open ai icon"
+              />
+              &nbsp;
+              <Typography variant="h5" ml={1}>
+                Vision
+              </Typography>
+            </Box>
+          </Box>
 
-  if (view === "draw") {
-    return (
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        flexDirection="column"
-        height="100vh"
-        width="100vw"
-      >
-        <Tldraw />
-      </Box>
-    );
-  }
+          <Box height="70vh" width="100vw" bgcolor="black">
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              pt={4}
+            >
+              <Button
+                variant="contained"
+                sx={defaultButtonStyle}
+                onClick={() => setView("upload")}
+              >
+                Do you have the Image?
+              </Button>
+              <Button
+                variant="contained"
+                sx={{ ...defaultButtonStyle, ml: 2 }}
+                onClick={() => setView("draw")}
+              >
+                Draw and download the Image
+              </Button>
+            </Box>
+          </Box>
+        </>
+      );
+    }
+    if (view === "upload") {
+      return <WithImageControls />;
+    }
 
-  if (view === "upload") {
-    return (
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        flexDirection="column"
-        height="100vh"
-        width="100vw"
-      >
-        <WithImageControls />
-      </Box>
-    );
-  }
+    if (view === "draw") {
+      return <Tldraw />;
+    }
+  };
+
+  return (
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      flexDirection="column"
+      height="100vh"
+      width="100vw"
+    >
+      {loadUI()}
+    </Box>
+  );
 };
 
 export default ImageGeneration;

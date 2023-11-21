@@ -13,7 +13,7 @@ const demos = [
   },
   {
     name: "Wireframe to HTML",
-    link: "/ui-to-html",
+    link: "/image-vision",
     image: ""
   }
 ];
