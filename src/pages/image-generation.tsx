@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { TextField, Button, Box, Typography } from "@mui/material";
 import ImageSkeleton from "@/components/image-generation/image-skeleton";
+import ImageIcon from "@mui/icons-material/Image";
+import Image from "next/image";
 
 const ImageGeneration = () => {
   const [searchText, setSearchText] = useState("");
@@ -11,6 +13,7 @@ const ImageGeneration = () => {
   const handleSearch = async () => {
     // Add your logic here for generating images based on the search text
     setLoading(true);
+    setImageData({});
 
     const response = await fetch("http://localhost:3000/api/generate-image", {
       method: "POST",
@@ -29,58 +32,93 @@ const ImageGeneration = () => {
     setLoading(false);
   };
 
-  return (
-    <Box
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      flexDirection="column"
-      height="100vh"
-      width="100vw"
-    >
-      <Box>
-        <TextField
-          label="Search"
-          autoComplete="off"
-          size="small"
-          variant="outlined"
-          value={searchText}
-          onChange={e => setSearchText(e.target.value)}
-          sx={{ marginRight: 1 }}
-        />
-        <Button
-          variant="contained"
-          onClick={handleSearch}
-          disabled={searchText.length < 3}
-          sx={{ textTransform: "none" }}
+  const getImageOrPlaceHolder = () => {
+    if (isLoading) {
+      return (
+        <Box
+          pt={4}
+          height="inherit"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
         >
-          Generate Image
-        </Button>
-      </Box>
-
-      {isLoading && (
-        <Box mt={4}>
           <ImageSkeleton />
         </Box>
-      )}
+      );
+    }
 
-      {imageData.url && (
+    if (imageData.url) {
+      return (
         <>
-          <Box mt={4}>
+          <Box pt={4} display="flex" justifyContent="center">
             <Box
               component="img"
               src={imageData.url}
               width={500}
               height={500}
-              alt="Picture of the author"
+              alt="generated image"
             />
           </Box>
           <Box width="36rem">
             <Typography>{imageData.revised_prompt}</Typography>
           </Box>
         </>
-      )}
-    </Box>
+      );
+    }
+
+    return (
+      <Box display="flex" justifyContent="center">
+        <ImageIcon sx={{ fontSize: "32rem" }} />
+      </Box>
+    );
+  };
+
+  return (
+    <>
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        flexDirection="column"
+        height="30vh"
+        width="100vw"
+      >
+        <Box display="flex" alignItems="center">
+          <Image
+            src="/assets/image/open-ai-2.png"
+            height={150}
+            width={150}
+            alt="Open ai icon"
+          />
+          &nbsp;
+          <Typography variant="h5" ml={1}>
+            Image generation
+          </Typography>
+        </Box>
+        <Box>
+          <TextField
+            label="Search"
+            autoComplete="off"
+            size="small"
+            variant="outlined"
+            value={searchText}
+            onChange={e => setSearchText(e.target.value)}
+            sx={{ marginRight: 1 }}
+          />
+          <Button
+            variant="contained"
+            onClick={handleSearch}
+            disabled={searchText.length < 3}
+            sx={{ textTransform: "none" }}
+          >
+            Generate Image
+          </Button>
+        </Box>
+      </Box>
+      <Box height="70vh" color="white" bgcolor="black">
+        {getImageOrPlaceHolder()}
+      </Box>
+    </>
   );
 };
 
