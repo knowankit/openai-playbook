@@ -4,8 +4,12 @@ import ImageSkeleton from "@/components/image-generation/image-skeleton";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
 import "@tldraw/tldraw/tldraw.css";
-import { Tldraw } from "@tldraw/tldraw";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const Tldraw = dynamic(async () => (await import("@tldraw/tldraw")).Tldraw, {
+  ssr: false
+});
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
