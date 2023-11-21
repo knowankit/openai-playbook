@@ -39,7 +39,7 @@ const ImageControls = () => {
     setLoading(false);
   };
 
-  const askAi = async () => {
+  const generateHtml = async () => {
     const response = await fetch("http://localhost:3000/api/generate-vision", {
       method: "POST",
       headers: {
@@ -76,9 +76,9 @@ const ImageControls = () => {
           variant="contained"
           disabled={!base64Image}
           color="secondary"
-          onClick={askAi}
+          onClick={generateHtml}
         >
-          Ask AI
+          Generate HTML
         </Button>
       )}
 
