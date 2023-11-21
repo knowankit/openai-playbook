@@ -8,6 +8,11 @@ const demos = [
     name: "Image generation",
     link: "/image-generation",
     image: ""
+  },
+  {
+    name: "Make ui to HTML",
+    link: "/ui-to-html",
+    image: ""
   }
 ];
 
@@ -40,7 +45,7 @@ const Home = () => {
         />
         &nbsp; playbook
       </Box>
-      <Box display="flex" p={4} bgcolor="black" height="60vh">
+      <Box display="flex" bgcolor="black" height="60vh" flexWrap="wrap">
         {demos.map((demo, index) => (
           <Button
             sx={{ textTransform: "none" }}
