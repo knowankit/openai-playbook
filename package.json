@@ -21,7 +21,7 @@
     "eslint": "8.43.0",
     "eslint-config-next": "13.4.6",
     "immer": "^10.0.3",
-    "next": "13.4.6",
+    "next": "13.5.0",
     "next-auth": "^4.24.4",
     "nextjs-progressbar": "^0.0.16",
     "nookies": "^2.5.2",
