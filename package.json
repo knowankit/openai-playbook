@@ -26,6 +26,7 @@
     "nextjs-progressbar": "^0.0.16",
     "nookies": "^2.5.2",
     "openai": "^4.0.0",
+    "prismjs": "^1.29.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.11.0",
@@ -35,6 +36,7 @@
   "devDependencies": {
     "@types/lodash": "^4.14.201",
     "@types/node": "20.3.1",
+    "@types/prismjs": "^1.26.3",
     "@types/react": "18.2.12",
     "@types/react-dom": "18.2.5",
     "@types/uuid": "^9.0.5"
