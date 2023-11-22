@@ -5,7 +5,13 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
 import "@tldraw/tldraw/tldraw.css";
 import Image from "next/image";
-import dynamic from "next/dynamic";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle
+} from "@mui/material";
+import CodeHighlight from "@/components/code-highlight";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -19,9 +25,11 @@ const VisuallyHiddenInput = styled("input")({
   width: 1
 });
 
-const WithImageControls = () => {
+const Upload = () => {
+  const [open, setOpen] = React.useState(false);
   const [isLoading, setLoading] = useState(false);
   const [base64Image, setBase64Image] = useState("");
+  const [codes, setCodes] = useState<any>(null);
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -53,10 +61,24 @@ const WithImageControls = () => {
     });
 
     const result = await response.json();
-    console.log("response", result);
+
+    if (
+      result &&
+      result[0] &&
+      result[0]["message"] &&
+      result[0]["message"]["content"]
+    ) {
+      setCodes(result[0]["message"]["content"]);
+      console.log(result[0]["message"]["content"]);
+    }
+    setOpen(true);
   };
 
-  return (
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const ImageControls = (
     <>
       <Box height="30vh">
         <Box display="flex" justifyContent="center" alignItems="center">
@@ -98,6 +120,17 @@ const WithImageControls = () => {
               Get HTML
             </Button>
           )}
+          {codes && (
+            <Button
+              sx={{ textTransform: "none", ml: 2 }}
+              variant="contained"
+              disabled={!base64Image}
+              color="secondary"
+              onClick={() => setOpen(true)}
+            >
+              Show codes
+            </Button>
+          )}
         </Box>
         <Box display="flex" alignItems="center" justifyContent="center">
           {isLoading && (
@@ -119,9 +152,7 @@ const WithImageControls = () => {
       </Box>
     </>
   );
-};
 
-const Upload = () => {
   return (
     <Box
       display="flex"
@@ -131,7 +162,18 @@ const Upload = () => {
       height="100vh"
       width="100vw"
     >
-      <WithImageControls />
+      {ImageControls}
+      {open && (
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Optional sizes</DialogTitle>
+          <DialogContent>
+            <CodeHighlight code={codes} />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Close</Button>
+          </DialogActions>
+        </Dialog>
+      )}
     </Box>
   );
 };
