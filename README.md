@@ -1,13 +1,13 @@
 # OpenAI Playbook - Next.js Edition
 
-![alt text](https://github.com/knowankit/openai-playbook/blob/develop/home.png)
+![Website home page](https://github.com/knowankit/openai-playbook/blob/develop/home.png)
 
 Welcome to the OpenAI Playbook built with Next.js! This playbook combines the power of OpenAI's models to generate images with different resolutions and models. It also utilizes Image Vision AI to generate HTML / react Material UI codes from images.
 
 ## Features
 
 ### 1. DALL-E Image Generation
-Explore the fascinating world of generative art by using DALL-E models to create unique and high-resolution images. 
+Explore the fascinating world of generative art by using DALL-E models to create unique and high-resolution images.
 Experiment with different resolutions and unleash your creativity.
 
 ### 2. Generate image to HTML codes.
@@ -27,12 +27,12 @@ To get started with the Email Editor, follow these steps:
 
 2. **Set up your OpenAI API Key:**
    Create a .env.local file in the root directory:
-   
+
    ```bash
    OPEN_AI=your-api-key-goes-here
    ORGANISATION_ID=organisation-id
    ```
-   
+
 3. **Run the Application**: Start the development server to launch the openai-playbook in your web browser.
 
    ```bash

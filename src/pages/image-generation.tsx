@@ -124,7 +124,7 @@ const ImageGeneration = () => {
             variant="outlined"
             value={searchText}
             onChange={e => setSearchText(e.target.value)}
-            sx={{ marginRight: 1 }}
+            sx={{ marginRight: 1, width: "20rem" }}
           />
           <Button
             variant="contained"
