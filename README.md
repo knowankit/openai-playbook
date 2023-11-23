@@ -1,8 +1,7 @@
 # OpenAI Playbook - Next.js Edition
 
-<p align="center">
-<img src="https://github.com/knowankit/openai-playbook/blob/develop/home.png" alt="OpenAI Logo" height="400">
-</p>
+![Open ai](https://github.com/knowankit/openai-playbook/blob/develop/playbook.gif)
+
 
 <p align="center">
   <a href="https://twitter.com/knowankit">
