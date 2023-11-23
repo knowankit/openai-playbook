@@ -22,7 +22,7 @@
     "eslint-config-next": "13.4.6",
     "immer": "^10.0.3",
     "next": "13.4.6",
-    "next-auth": "^4.24.4",
+    "next-auth": "^4.24.5",
     "nextjs-progressbar": "^0.0.16",
     "nookies": "^2.5.2",
     "openai": "^4.0.0",
