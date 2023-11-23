@@ -1,6 +1,14 @@
 # OpenAI Playbook - Next.js Edition
 
-![Website home page](https://github.com/knowankit/openai-playbook/blob/develop/home.png)
+<p align="center">
+<img src="https://github.com/knowankit/openai-playbook/blob/develop/home.png" alt="OpenAI Logo" height="400">
+</p>
+
+<p align="center">
+  <a href="https://twitter.com/knowankit">
+    <img alt="Twitter: Ankit Kumar" src="https://img.shields.io/twitter/follow/knowankit.svg?style=social" target="_blank" />
+  </a>
+</p>
 
 Welcome to the OpenAI Playbook built with Next.js! This playbook combines the power of OpenAI's models to generate images with different resolutions and models. It also utilizes Image Vision AI to generate HTML / react Material UI codes from images.
 
