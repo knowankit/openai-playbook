@@ -30,6 +30,16 @@ const ImageGeneration = () => {
 
     const result = await response.json();
 
+    if (result["error"]) {
+      setLoading(false);
+
+      if (result["error"]["code"] === "invalid_size") {
+        alert("Size is not supported with this model");
+      }
+
+      return;
+    }
+
     if (Array.isArray(result)) {
       setImageData(result[0]);
     }
@@ -55,7 +65,13 @@ const ImageGeneration = () => {
     if (imageData.url) {
       return (
         <>
-          <Box pt={4} display="flex" justifyContent="center">
+          <Box
+            pt={4}
+            display="flex"
+            justifyContent="center"
+            flexDirection="column"
+            alignItems="center"
+          >
             <Box
               component="img"
               src={imageData.url}
@@ -63,9 +79,9 @@ const ImageGeneration = () => {
               height={500}
               alt="generated image"
             />
-          </Box>
-          <Box width="36rem">
-            <Typography>{imageData.revised_prompt}</Typography>
+            <Box width="36rem" textAlign="center">
+              <Typography>{imageData.revised_prompt}</Typography>
+            </Box>
           </Box>
         </>
       );
@@ -85,7 +101,7 @@ const ImageGeneration = () => {
         alignItems="center"
         justifyContent="center"
         flexDirection="column"
-        height="40vh"
+        height="28rem"
         width="100vw"
       >
         <Box display="flex" alignItems="center">
@@ -124,7 +140,7 @@ const ImageGeneration = () => {
           <ResolutionRadioGroup value={resolution} onChange={setResolution} />
         </Box>
       </Box>
-      <Box height="100%" color="white" bgcolor="black">
+      <Box minHeight="28rem" color="white" bgcolor="black">
         {getImageOrPlaceHolder()}
       </Box>
     </>

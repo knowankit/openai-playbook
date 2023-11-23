@@ -18,15 +18,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (text.length < 3) {
       res.status(401).json({ type: 'error', message: 'Too short text'})
     }
+
+    try  {
     const image = await getImage(text, model, resolution)
     res.status(200).json(image)
+
+  } catch(e) {
+    res.status(401).json({ error: e})
+  }
+
   } else {
   }
 }
 
 const getImage = async (text: string, model: string, resolution: string) => {
   const image = await openai.images.generate({ model, prompt: text, size: resolution as ResolutionType });
-
+  console.log('image', image)
   return image.data
 }
 
