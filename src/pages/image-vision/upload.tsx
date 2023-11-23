@@ -50,6 +50,7 @@ const Upload = () => {
   };
 
   const askAi = async () => {
+    setLoading(true);
     const response = await fetch("http://localhost:3000/api/generate-vision", {
       method: "POST",
       headers: {
@@ -69,8 +70,8 @@ const Upload = () => {
       result[0]["message"]["content"]
     ) {
       setCodes(result[0]["message"]["content"]);
-      console.log(result[0]["message"]["content"]);
     }
+    setLoading(false);
     setOpen(true);
   };
 
@@ -139,7 +140,7 @@ const Upload = () => {
             </Box>
           )}
 
-          {base64Image && (
+          {base64Image && !isLoading && (
             <Box mt={2}>
               <img
                 src={base64Image}
