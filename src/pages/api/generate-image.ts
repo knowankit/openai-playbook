@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { ResolutionType } from "@/types/image-generation";
 
 const openai = new OpenAI({
   apiKey: process.env.OPEN_AI,
@@ -10,22 +11,21 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
     // Process a POST request
-    const text = req.body.searchText
+    const { searchText: text, resolution, model } = req.body
     if(!text) {
       res.status(401).json({ type: 'error', message: 'Please add a text'})
     }
     if (text.length < 3) {
       res.status(401).json({ type: 'error', message: 'Too short text'})
     }
-    const image = await getImage(text)
+    const image = await getImage(text, model, resolution)
     res.status(200).json(image)
   } else {
-    // Handle any other HTTP method
   }
 }
 
-const getImage = async (text: string) => {
-  const image = await openai.images.generate({ model: "dall-e-2", prompt: text, size: '256x256' });
+const getImage = async (text: string, model: string, resolution: string) => {
+  const image = await openai.images.generate({ model, prompt: text, size: resolution as ResolutionType });
 
   return image.data
 }

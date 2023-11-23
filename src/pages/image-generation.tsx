@@ -3,10 +3,15 @@ import { TextField, Button, Box, Typography } from "@mui/material";
 import ImageSkeleton from "@/components/image-generation/image-skeleton";
 import ImageIcon from "@mui/icons-material/Image";
 import Image from "next/image";
+import ModelRadioGroup from "@/components/image-generation/ai-model-radio-buttons";
+import ResolutionRadioGroup from "@/components/image-generation/resolution-radio-buttons";
+import { ResolutionType } from "@/types/image-generation";
 
 const ImageGeneration = () => {
   const [searchText, setSearchText] = useState("");
   const [isLoading, setLoading] = useState(false);
+  const [resolution, setResolution] = useState<ResolutionType>("256x256");
+  const [model, setModel] = useState("dall-e-2");
 
   const [imageData, setImageData] = useState<any>({});
 
@@ -20,7 +25,7 @@ const ImageGeneration = () => {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ searchText })
+      body: JSON.stringify({ searchText, resolution, model })
     });
 
     const result = await response.json();
@@ -80,7 +85,7 @@ const ImageGeneration = () => {
         alignItems="center"
         justifyContent="center"
         flexDirection="column"
-        height="30vh"
+        height="40vh"
         width="100vw"
       >
         <Box display="flex" alignItems="center">
@@ -114,8 +119,12 @@ const ImageGeneration = () => {
             Generate Image
           </Button>
         </Box>
+        <Box display="flex" flexDirection="column">
+          <ModelRadioGroup value={model} onChange={setModel} />
+          <ResolutionRadioGroup value={resolution} onChange={setResolution} />
+        </Box>
       </Box>
-      <Box height="70vh" color="white" bgcolor="black">
+      <Box height="100%" color="white" bgcolor="black">
         {getImageOrPlaceHolder()}
       </Box>
     </>
